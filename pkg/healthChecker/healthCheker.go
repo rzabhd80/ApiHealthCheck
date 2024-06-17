@@ -45,6 +45,7 @@ func (h *HealthChecker) Start(poolSize int) {
 		for {
 			select {
 			case <-ticker.C:
+				log.Printf("%s", "health checks are being run")
 				h.runHealthChecks(poolSize)
 			case <-h.stopChan:
 				return
