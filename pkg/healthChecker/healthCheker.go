@@ -80,18 +80,19 @@ func (h *HealthChecker) runHealthChecks(poolSize int) {
 	}
 
 	wg.Wait()
+	return
 }
 
 func (h *HealthChecker) checkAPIHealth(api models.API) {
 	client := &http.Client{}
-	req, err := http.NewRequest(api.RequestMethod, api.RequestURL, bytes.NewBuffer([]byte(api.RequestBody)))
+	req, err := http.NewRequest(api.RequestMethod, api.RequestURL, bytes.NewBuffer([]byte(*api.RequestBody)))
 	if err != nil {
 		log.Printf("Failed to create request: %v", err)
 		return
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	for key, value := range helpers.ParseHeaders(api.RequestHeaders) {
+	for key, value := range helpers.ParseHeaders(*api.RequestHeaders) {
 		req.Header.Set(key, value)
 	}
 
@@ -116,8 +117,8 @@ func (h *HealthChecker) checkAPIHealth(api models.API) {
 	if err != nil {
 		log.Printf("%s", "could not write the health check result")
 	}
-	if api.LastStatus != resp.StatusCode {
-		api.LastStatus = resp.StatusCode
+	if *api.LastStatus != resp.StatusCode {
+		*api.LastStatus = resp.StatusCode
 		err := h.apiRepo.Update(&api)
 		if err != nil {
 			log.Printf("%s", "could not update the health status in the database")
