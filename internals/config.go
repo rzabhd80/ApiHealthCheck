@@ -1,6 +1,7 @@
 package internals
 
 import (
+	"github.com/joho/godotenv"
 	"os"
 )
 
@@ -15,6 +16,10 @@ type Config struct {
 }
 
 func LoadConfig() (*Config, error) {
+	err := godotenv.Load(".env")
+	if err != nil {
+		return nil, err
+	}
 	config := &Config{
 		DBHost:     os.Getenv("DB_HOST"),
 		DBPort:     os.Getenv("DB_PORT"),
