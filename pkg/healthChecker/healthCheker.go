@@ -120,6 +120,7 @@ func (h *HealthChecker) checkAPIHealth(api models.API) {
 	if *api.LastStatus != resp.StatusCode {
 		*api.LastStatus = resp.StatusCode
 		err := h.apiRepo.Update(&api)
+
 		if err != nil {
 			log.Printf("%s", "could not update the health status in the database")
 		}

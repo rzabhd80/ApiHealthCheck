@@ -24,6 +24,7 @@ func (r *healthCheckRepository) LogHealthCheck(apiID uint, url string, status st
 		URL:    url,
 		Status: status,
 	}
+	
 	if err := r.db.Create(&healthCheck).Error; err != nil {
 		log.Printf("Failed to log health check: %v", err)
 		return err

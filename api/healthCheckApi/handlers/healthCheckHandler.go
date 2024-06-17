@@ -29,6 +29,7 @@ func (h *APIHandler) CreateAPI(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, api)
+
 }
 
 func (h *APIHandler) GetAPIs(c *gin.Context) {
