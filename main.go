@@ -13,7 +13,7 @@ func main() {
 	engine := gin.Default()
 	db := internals.Setup(config)
 	internals.Migrate(db)
-	service.SetupRoutes(engine, db)
+	service.SetupApp(engine, db)
 	err := engine.Run(":" + config.ServerPort)
 	if err != nil {
 		return

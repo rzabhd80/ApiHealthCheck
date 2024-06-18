@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func SetupRoutes(router *gin.Engine, database *gorm.DB) {
+func SetupApp(router *gin.Engine, database *gorm.DB) {
 	apiRepository := repository.NewAPIRepository(database)
 	apiHandler := handlers.NewAPIHandler(apiRepository)
 	healthCheckRepository := healthCheckRepo.NewHealthCheckRepository(database)
